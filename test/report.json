@@ -1,0 +1,1306 @@
+{
+ "totals": {
+  "questions": 807,
+  "ast": 627,
+  "compileGraph": 14,
+  "tool": 627,
+  "graph": 531,
+  "info": 165,
+  "sheetInterval": 38,
+  "omni": 482,
+  "omniParse": 470,
+  "failures": 3
+ },
+ "pass": {
+  "ast": 627,
+  "compile-graph": 14,
+  "info-prose": 6,
+  "info-echo": 129,
+  "info-notation": 27,
+  "info-applet": 3
+ },
+ "assignments": {
+  "Build Understanding 1.3 Complex Numbers": {
+   "questions": 19,
+   "pass": {},
+   "info": {
+    "info-prose": 1,
+    "info-echo": 1
+   }
+  },
+  "Pre-work 1.3 Complex Numbers": {
+   "questions": 23,
+   "pass": {},
+   "info": {
+    "info-echo": 5,
+    "info-notation": 1,
+    "info-prose": 1
+   }
+  },
+  "Build Understanding 1.8 Absolute Value Inequalities": {
+   "questions": 14,
+   "pass": {},
+   "info": {}
+  },
+  "Build Understanding 2.2 Circles": {
+   "questions": 19,
+   "pass": {},
+   "info": {}
+  },
+  "Pre-work 2.2 Circles": {
+   "questions": 13,
+   "pass": {},
+   "info": {
+    "info-echo": 3
+   }
+  },
+  "Build Understanding 3.1_1.4 Quadratic Functions and Models": {
+   "questions": 44,
+   "pass": {},
+   "info": {
+    "info-notation": 1,
+    "info-echo": 2,
+    "info-applet": 2
+   }
+  },
+  "Pre-work 3.1 Quadratic Functions": {
+   "questions": 15,
+   "pass": {},
+   "info": {
+    "info-prose": 2,
+    "info-echo": 2
+   }
+  },
+  "Build Understanding 3.2 Synthetic Division": {
+   "questions": 20,
+   "pass": {},
+   "info": {}
+  },
+  "Pre-work 3.2 Synthetic Division": {
+   "questions": 19,
+   "pass": {},
+   "info": {
+    "info-echo": 11
+   }
+  },
+  "Build Understanding 3.3 Zeros of Polynomial Functions": {
+   "questions": 22,
+   "pass": {},
+   "info": {}
+  },
+  "Pre-work 3.3 Zeros of Polynomial Functions": {
+   "questions": 15,
+   "pass": {},
+   "info": {
+    "info-echo": 10,
+    "info-notation": 1
+   }
+  },
+  "Build Understanding 3.4 Polynomial Functions Graphs, Applications and Models": {
+   "questions": 24,
+   "pass": {},
+   "info": {}
+  },
+  "Pre-work 3.4 Polynomial Functions Graphs and Appli": {
+   "questions": 25,
+   "pass": {},
+   "info": {
+    "info-echo": 9,
+    "info-notation": 1
+   }
+  },
+  "Build Understanding 3.5 Rational Functions": {
+   "questions": 41,
+   "pass": {},
+   "info": {
+    "info-echo": 2,
+    "info-applet": 1,
+    "info-notation": 6
+   }
+  },
+  "Pre-work 3.5 Rational Functions Graphs and Applica": {
+   "questions": 21,
+   "pass": {},
+   "info": {
+    "info-echo": 7
+   }
+  },
+  "Build Understanding 3.6 Polynomial and Rational In": {
+   "questions": 29,
+   "pass": {},
+   "info": {}
+  },
+  "Pre-work 3.6 Polynomial and Rational Inequalities": {
+   "questions": 15,
+   "pass": {},
+   "info": {
+    "info-echo": 4
+   }
+  },
+  "Build Understanding 4.1 Inverse Functions": {
+   "questions": 43,
+   "pass": {},
+   "info": {
+    "info-echo": 4,
+    "info-notation": 1
+   }
+  },
+  "Pre-work 4.1 Inverse Functions": {
+   "questions": 13,
+   "pass": {},
+   "info": {
+    "info-prose": 1,
+    "info-echo": 3,
+    "info-notation": 5
+   }
+  },
+  "Build Understanding 4.2 Exponential Functions": {
+   "questions": 45,
+   "pass": {},
+   "info": {
+    "info-echo": 8,
+    "info-notation": 2
+   }
+  },
+  "Pre-work 4.2 Exponential Functions": {
+   "questions": 30,
+   "pass": {},
+   "info": {
+    "info-echo": 22,
+    "info-notation": 1
+   }
+  },
+  "Build Understanding 4.3 Logarithmic Functions": {
+   "questions": 37,
+   "pass": {},
+   "info": {
+    "info-echo": 3
+   }
+  },
+  "Pre-work 4.3 Logarithmic Functions": {
+   "questions": 17,
+   "pass": {},
+   "info": {
+    "info-echo": 8
+   }
+  },
+  "Build Understanding 4.4 Evaluating Logarithms and Change of Base Formula": {
+   "questions": 28,
+   "pass": {},
+   "info": {
+    "info-echo": 4
+   }
+  },
+  "Pre-work 4.4 Evaluating Logarithms & Change of Base Theorem": {
+   "questions": 10,
+   "pass": {},
+   "info": {
+    "info-echo": 3
+   }
+  },
+  "Build Understanding 4.5 Exponential and Logarithmic Equations": {
+   "questions": 30,
+   "pass": {},
+   "info": {
+    "info-echo": 2,
+    "info-notation": 1
+   }
+  },
+  "Pre-work 4.5 Exponential and Logarithmic Equations": {
+   "questions": 11,
+   "pass": {},
+   "info": {}
+  },
+  "Build Understanding 4.6 Applications of Exponential Growth and Decay": {
+   "questions": 12,
+   "pass": {},
+   "info": {}
+  },
+  "Pre-work 4.6 Applications of Exponential Growth and Decay": {
+   "questions": 10,
+   "pass": {},
+   "info": {
+    "info-echo": 7
+   }
+  },
+  "Build Understanding 9.1 Systems of Linear Equations": {
+   "questions": 22,
+   "pass": {},
+   "info": {
+    "info-notation": 5
+   }
+  },
+  "Pre-work 9.1 Systems of Linear Equations": {
+   "questions": 6,
+   "pass": {},
+   "info": {
+    "info-echo": 2
+   }
+  },
+  "Build Understanding 9.5 Nonlinear System of Equations": {
+   "questions": 13,
+   "pass": {},
+   "info": {}
+  },
+  "Pre-work 9.5 Systems of Non-Linear Equations": {
+   "questions": 10,
+   "pass": {},
+   "info": {
+    "info-echo": 2
+   }
+  },
+  "Build Understanding 10.2 Ellipses": {
+   "questions": 19,
+   "pass": {},
+   "info": {
+    "info-echo": 1
+   }
+  },
+  "Pre-work 10.2 Ellipses": {
+   "questions": 16,
+   "pass": {},
+   "info": {
+    "info-echo": 1
+   }
+  },
+  "Build Understanding 10.3 Hyperbolas": {
+   "questions": 19,
+   "pass": {},
+   "info": {}
+  },
+  "Pre-work 10.3 Hyperbolas": {
+   "questions": 16,
+   "pass": {},
+   "info": {
+    "info-echo": 3,
+    "info-prose": 1
+   }
+  },
+  "Quiz 2": {
+   "questions": 3,
+   "pass": {},
+   "info": {}
+  },
+  "Test 2 Study Guide": {
+   "questions": 19,
+   "pass": {},
+   "info": {}
+  }
+ },
+ "boundary": {
+  "sheetChecks": 36,
+  "tChecks": 1,
+  "poleChecks": 18,
+  "absSheetChecks": 2,
+  "B1-pole-open-rat-ineq": "pass",
+  "B2-exact-fraction": "pass",
+  "B3-t-variable": "pass",
+  "B4-frac-span-slash": "pass",
+  "B5-sign-chart-closure": "pass",
+  "V4-exp-equations": "pass",
+  "V4-log-equations": "pass",
+  "V4-conic-general": "pass",
+  "V4-log-sum": "pass",
+  "V4-log-expr-eval": "pass"
+ },
+ "failures": [
+  {
+   "file": "Build Understanding 4.3 Logarithmic Functions",
+   "q": "36",
+   "kind": "UNSOLVED-solvable-shape",
+   "detail": "log_3 \\frac{sqrt(x)\\sqrt[7]{y}}{w^5sqrt(z)}"
+  },
+  {
+   "file": "Build Understanding 4.3 Logarithmic Functions",
+   "q": "39",
+   "kind": "UNSOLVED-solvable-shape",
+   "detail": "2log_b(z + 2) + log_b(3z + 3)"
+  },
+  {
+   "file": "Build Understanding 4.4 Evaluating Logarithms and Change of Base Formula",
+   "q": "26",
+   "kind": "UNSOLVED-solvable-shape",
+   "detail": "d = 10log((I)/(I_0)); 100,000,000,000I_0; I_0"
+  }
+ ],
+ "infoList": [
+  {
+   "file": "Build Understanding 1.3 Complex Numbers",
+   "q": "1",
+   "cls": "info-prose",
+   "expr": "Identify the number 5 as real, complex, pure imaginary, or nonreal complex."
+  },
+  {
+   "file": "Build Understanding 1.3 Complex Numbers",
+   "q": "4",
+   "cls": "info-echo",
+   "expr": "pi"
+  },
+  {
+   "file": "Pre-work 1.3 Complex Numbers",
+   "q": "1",
+   "cls": "info-echo",
+   "expr": "-2^2"
+  },
+  {
+   "file": "Pre-work 1.3 Complex Numbers",
+   "q": "2",
+   "cls": "info-echo",
+   "expr": "sqrt(a)"
+  },
+  {
+   "file": "Pre-work 1.3 Complex Numbers",
+   "q": "3",
+   "cls": "info-echo",
+   "expr": "sqrt(a)"
+  },
+  {
+   "file": "Pre-work 1.3 Complex Numbers",
+   "q": "14",
+   "cls": "info-echo",
+   "expr": "i"
+  },
+  {
+   "file": "Pre-work 1.3 Complex Numbers",
+   "q": "15",
+   "cls": "info-echo",
+   "expr": "a + bi"
+  },
+  {
+   "file": "Pre-work 1.3 Complex Numbers",
+   "q": "16",
+   "cls": "info-notation",
+   "expr": "6 - isqrt(5); 6 + isqrt(5)"
+  },
+  {
+   "file": "Pre-work 1.3 Complex Numbers",
+   "q": "17",
+   "cls": "info-prose",
+   "expr": "The product of a complex number and its conjugate is always a(n) (1) _______."
+  },
+  {
+   "file": "Pre-work 2.2 Circles",
+   "q": "1",
+   "cls": "info-echo",
+   "expr": "The set of all points in a plane that are equidistant from a fixed point is a/an"
+  },
+  {
+   "file": "Pre-work 2.2 Circles",
+   "q": "2",
+   "cls": "info-echo",
+   "expr": "(h,k)"
+  },
+  {
+   "file": "Pre-work 2.2 Circles",
+   "q": "13",
+   "cls": "info-echo",
+   "expr": "Draw a solid circle overlaying the dashed circle on the graph."
+  },
+  {
+   "file": "Build Understanding 3.1_1.4 Quadratic Functions and Models",
+   "q": "1",
+   "cls": "info-notation",
+   "expr": "f(x) = a(x - h)^2 + k, a \\neq 0"
+  },
+  {
+   "file": "Build Understanding 3.1_1.4 Quadratic Functions and Models",
+   "q": "8",
+   "cls": "info-echo",
+   "expr": "(-\\infty, \\infty)"
+  },
+  {
+   "file": "Build Understanding 3.1_1.4 Quadratic Functions and Models",
+   "q": "12",
+   "cls": "info-echo",
+   "expr": "A student likes to think of a parabola's vertex as the point where it intersects"
+  },
+  {
+   "file": "Build Understanding 3.1_1.4 Quadratic Functions and Models",
+   "q": "17",
+   "cls": "info-applet",
+   "expr": ""
+  },
+  {
+   "file": "Build Understanding 3.1_1.4 Quadratic Functions and Models",
+   "q": "20",
+   "cls": "info-applet",
+   "expr": ""
+  },
+  {
+   "file": "Pre-work 3.1 Quadratic Functions",
+   "q": "2",
+   "cls": "info-prose",
+   "expr": "The lowest point on the graph of a parabola that opens up is the (1) _______ of"
+  },
+  {
+   "file": "Pre-work 3.1 Quadratic Functions",
+   "q": "3",
+   "cls": "info-prose",
+   "expr": "The highest point on the graph of a parabola that opens down is the (1) _______"
+  },
+  {
+   "file": "Pre-work 3.1 Quadratic Functions",
+   "q": "10",
+   "cls": "info-echo",
+   "expr": "112"
+  },
+  {
+   "file": "Pre-work 3.1 Quadratic Functions",
+   "q": "15",
+   "cls": "info-echo",
+   "expr": "Draw a solid vertical parabola overlaying the dashed parabola."
+  },
+  {
+   "file": "Pre-work 3.2 Synthetic Division",
+   "q": "1",
+   "cls": "info-echo",
+   "expr": "28 / 4 = 7"
+  },
+  {
+   "file": "Pre-work 3.2 Synthetic Division",
+   "q": "2",
+   "cls": "info-echo",
+   "expr": "42 / 7 = 6"
+  },
+  {
+   "file": "Pre-work 3.2 Synthetic Division",
+   "q": "3",
+   "cls": "info-echo",
+   "expr": "25 / 5 = 5"
+  },
+  {
+   "file": "Pre-work 3.2 Synthetic Division",
+   "q": "4",
+   "cls": "info-echo",
+   "expr": "29 = 4 * 7 + 1"
+  },
+  {
+   "file": "Pre-work 3.2 Synthetic Division",
+   "q": "5",
+   "cls": "info-echo",
+   "expr": "47 = 7 * 6 + 5"
+  },
+  {
+   "file": "Pre-work 3.2 Synthetic Division",
+   "q": "6",
+   "cls": "info-echo",
+   "expr": "527 = 7 * 75 + 2"
+  },
+  {
+   "file": "Pre-work 3.2 Synthetic Division",
+   "q": "7",
+   "cls": "info-echo",
+   "expr": "25 = 6 * 4 + 1"
+  },
+  {
+   "file": "Pre-work 3.2 Synthetic Division",
+   "q": "8",
+   "cls": "info-echo",
+   "expr": "80 / 2 = 40"
+  },
+  {
+   "file": "Pre-work 3.2 Synthetic Division",
+   "q": "9",
+   "cls": "info-echo",
+   "expr": "75 = 1 * 75"
+  },
+  {
+   "file": "Pre-work 3.2 Synthetic Division",
+   "q": "10",
+   "cls": "info-echo",
+   "expr": "24 = 7 * 3 + 3"
+  },
+  {
+   "file": "Pre-work 3.2 Synthetic Division",
+   "q": "11",
+   "cls": "info-echo",
+   "expr": "72 = 14 * 5 + 2"
+  },
+  {
+   "file": "Pre-work 3.3 Zeros of Polynomial Functions",
+   "q": "1",
+   "cls": "info-echo",
+   "expr": "Select the correct choice that completes the sentence below. A number is divisib"
+  },
+  {
+   "file": "Pre-work 3.3 Zeros of Polynomial Functions",
+   "q": "2",
+   "cls": "info-echo",
+   "expr": "Select the correct choice that completes the sentence below. A number is divisib"
+  },
+  {
+   "file": "Pre-work 3.3 Zeros of Polynomial Functions",
+   "q": "3",
+   "cls": "info-echo",
+   "expr": "Select the correct choice that completes the sentence below. A number is divisib"
+  },
+  {
+   "file": "Pre-work 3.3 Zeros of Polynomial Functions",
+   "q": "4",
+   "cls": "info-echo",
+   "expr": "Select the correct choice that completes the sentence below. A number is divisib"
+  },
+  {
+   "file": "Pre-work 3.3 Zeros of Polynomial Functions",
+   "q": "5",
+   "cls": "info-echo",
+   "expr": "147"
+  },
+  {
+   "file": "Pre-work 3.3 Zeros of Polynomial Functions",
+   "q": "6",
+   "cls": "info-echo",
+   "expr": "121"
+  },
+  {
+   "file": "Pre-work 3.3 Zeros of Polynomial Functions",
+   "q": "7",
+   "cls": "info-echo",
+   "expr": "71"
+  },
+  {
+   "file": "Pre-work 3.3 Zeros of Polynomial Functions",
+   "q": "8",
+   "cls": "info-echo",
+   "expr": "50"
+  },
+  {
+   "file": "Pre-work 3.3 Zeros of Polynomial Functions",
+   "q": "13",
+   "cls": "info-notation",
+   "expr": "z = 2 - 3i; \\bar{z} = -2 + 3i"
+  },
+  {
+   "file": "Pre-work 3.3 Zeros of Polynomial Functions",
+   "q": "14",
+   "cls": "info-echo",
+   "expr": "Determine whether each statement is true or false. If false, explain why. The pr"
+  },
+  {
+   "file": "Pre-work 3.3 Zeros of Polynomial Functions",
+   "q": "15",
+   "cls": "info-echo",
+   "expr": "Select the correct choice that completes the sentence below. If three positive n"
+  },
+  {
+   "file": "Pre-work 3.4 Polynomial Functions Graphs and Appli",
+   "q": "1",
+   "cls": "info-echo",
+   "expr": "Select the answers that best complete the given statements. The behavior of the"
+  },
+  {
+   "file": "Pre-work 3.4 Polynomial Functions Graphs and Appli",
+   "q": "6",
+   "cls": "info-echo",
+   "expr": "Indicate whether the following statement is true or false. Odd-degree polynomial"
+  },
+  {
+   "file": "Pre-work 3.4 Polynomial Functions Graphs and Appli",
+   "q": "7",
+   "cls": "info-echo",
+   "expr": "Determine whether the statement is true or false. Even-degree polynomial functio"
+  },
+  {
+   "file": "Pre-work 3.4 Polynomial Functions Graphs and Appli",
+   "q": "11",
+   "cls": "info-echo",
+   "expr": "Fill in the blank so that the resulting statement is true. Every real zero of a"
+  },
+  {
+   "file": "Pre-work 3.4 Polynomial Functions Graphs and Appli",
+   "q": "12",
+   "cls": "info-echo",
+   "expr": "Fill in the blanks so that the resulting statement is true. If r is a zero of ev"
+  },
+  {
+   "file": "Pre-work 3.4 Polynomial Functions Graphs and Appli",
+   "q": "13",
+   "cls": "info-notation",
+   "expr": "y = f(x); f(0); f(x) = 0; y = f(x)"
+  },
+  {
+   "file": "Pre-work 3.4 Polynomial Functions Graphs and Appli",
+   "q": "19",
+   "cls": "info-echo",
+   "expr": "Is the displayed graph the graph of a polynomial function?"
+  },
+  {
+   "file": "Pre-work 3.4 Polynomial Functions Graphs and Appli",
+   "q": "22",
+   "cls": "info-echo",
+   "expr": "y = f(x)"
+  },
+  {
+   "file": "Pre-work 3.4 Polynomial Functions Graphs and Appli",
+   "q": "24",
+   "cls": "info-echo",
+   "expr": "The comprehensive graphs of four polynomial functions are shown in A-D. Which of"
+  },
+  {
+   "file": "Pre-work 3.4 Polynomial Functions Graphs and Appli",
+   "q": "25",
+   "cls": "info-echo",
+   "expr": "(-\\infty, \\infty)"
+  },
+  {
+   "file": "Build Understanding 3.5 Rational Functions",
+   "q": "3",
+   "cls": "info-echo",
+   "expr": "Decide whether the following statement is true or false. \"If the degree of the n"
+  },
+  {
+   "file": "Build Understanding 3.5 Rational Functions",
+   "q": "4",
+   "cls": "info-echo",
+   "expr": "Fill in the blank so that the resulting statement is true. The graph of a ration"
+  },
+  {
+   "file": "Build Understanding 3.5 Rational Functions",
+   "q": "6",
+   "cls": "info-applet",
+   "expr": ""
+  },
+  {
+   "file": "Build Understanding 3.5 Rational Functions",
+   "q": "36",
+   "cls": "info-notation",
+   "expr": "x \\to 3^-; f(x) \\to"
+  },
+  {
+   "file": "Build Understanding 3.5 Rational Functions",
+   "q": "37",
+   "cls": "info-notation",
+   "expr": "x \\to -\\infty; f(x) \\to"
+  },
+  {
+   "file": "Build Understanding 3.5 Rational Functions",
+   "q": "38",
+   "cls": "info-notation",
+   "expr": "x \\to 2^-; f(x) \\to"
+  },
+  {
+   "file": "Build Understanding 3.5 Rational Functions",
+   "q": "39",
+   "cls": "info-notation",
+   "expr": "x \\to -2^+; f(x) \\to"
+  },
+  {
+   "file": "Build Understanding 3.5 Rational Functions",
+   "q": "40",
+   "cls": "info-notation",
+   "expr": "x \\to \\infty; f(x) \\to"
+  },
+  {
+   "file": "Build Understanding 3.5 Rational Functions",
+   "q": "41",
+   "cls": "info-notation",
+   "expr": "x \\to -2^-; f(x) \\to"
+  },
+  {
+   "file": "Pre-work 3.5 Rational Functions Graphs and Applica",
+   "q": "1",
+   "cls": "info-echo",
+   "expr": "((p(x))/(q(x)))"
+  },
+  {
+   "file": "Pre-work 3.5 Rational Functions Graphs and Applica",
+   "q": "2",
+   "cls": "info-echo",
+   "expr": "Determine whether the statement below is true or false. \"The domain of every rat"
+  },
+  {
+   "file": "Pre-work 3.5 Rational Functions Graphs and Applica",
+   "q": "3",
+   "cls": "info-echo",
+   "expr": "Select the correct choice that completes the sentence below. The quotient formed"
+  },
+  {
+   "file": "Pre-work 3.5 Rational Functions Graphs and Applica",
+   "q": "4",
+   "cls": "info-echo",
+   "expr": "((0)/(-15))"
+  },
+  {
+   "file": "Pre-work 3.5 Rational Functions Graphs and Applica",
+   "q": "5",
+   "cls": "info-echo",
+   "expr": "((-3.7)/(0))"
+  },
+  {
+   "file": "Pre-work 3.5 Rational Functions Graphs and Applica",
+   "q": "20",
+   "cls": "info-echo",
+   "expr": "-5"
+  },
+  {
+   "file": "Pre-work 3.5 Rational Functions Graphs and Applica",
+   "q": "21",
+   "cls": "info-echo",
+   "expr": "Use the graphs of the rational functions in A to D to answer the question. Give"
+  },
+  {
+   "file": "Pre-work 3.6 Polynomial and Rational Inequalities",
+   "q": "4",
+   "cls": "info-echo",
+   "expr": "[3, 9)"
+  },
+  {
+   "file": "Pre-work 3.6 Polynomial and Rational Inequalities",
+   "q": "5",
+   "cls": "info-echo",
+   "expr": "-2"
+  },
+  {
+   "file": "Pre-work 3.6 Polynomial and Rational Inequalities",
+   "q": "6",
+   "cls": "info-echo",
+   "expr": "-1"
+  },
+  {
+   "file": "Pre-work 3.6 Polynomial and Rational Inequalities",
+   "q": "14",
+   "cls": "info-echo",
+   "expr": "Select the correct choice that completes the sentence below. If three negative n"
+  },
+  {
+   "file": "Build Understanding 4.1 Inverse Functions",
+   "q": "7",
+   "cls": "info-echo",
+   "expr": "f(x) = 4"
+  },
+  {
+   "file": "Build Understanding 4.1 Inverse Functions",
+   "q": "19",
+   "cls": "info-echo",
+   "expr": "\\{(-2, 6), (3, 2), (5, 9)\\}"
+  },
+  {
+   "file": "Build Understanding 4.1 Inverse Functions",
+   "q": "20",
+   "cls": "info-echo",
+   "expr": "\\{(4, 3), (1, 7), (5, 2), (3, 3)\\}"
+  },
+  {
+   "file": "Build Understanding 4.1 Inverse Functions",
+   "q": "27",
+   "cls": "info-notation",
+   "expr": "(-4, -2), (-2, 1), (0, 2), (1, 4); f^(-1)"
+  },
+  {
+   "file": "Build Understanding 4.1 Inverse Functions",
+   "q": "29",
+   "cls": "info-echo",
+   "expr": "(2, 3), (-1, -5), (-5, 9), (3, 1); (3, 2), (-5, -1), (-9, -5), (1, 3)"
+  },
+  {
+   "file": "Pre-work 4.1 Inverse Functions",
+   "q": "3",
+   "cls": "info-prose",
+   "expr": "Fill in the blank. For a function to have an inverse, it must be (1) ________."
+  },
+  {
+   "file": "Pre-work 4.1 Inverse Functions",
+   "q": "4",
+   "cls": "info-echo",
+   "expr": "Select the answers that best complete the given statement. A function f has an i"
+  },
+  {
+   "file": "Pre-work 4.1 Inverse Functions",
+   "q": "5",
+   "cls": "info-echo",
+   "expr": "= x"
+  },
+  {
+   "file": "Pre-work 4.1 Inverse Functions",
+   "q": "6",
+   "cls": "info-notation",
+   "expr": "f^(-1)"
+  },
+  {
+   "file": "Pre-work 4.1 Inverse Functions",
+   "q": "7",
+   "cls": "info-notation",
+   "expr": "f^(-1); f^(-1)"
+  },
+  {
+   "file": "Pre-work 4.1 Inverse Functions",
+   "q": "8",
+   "cls": "info-notation",
+   "expr": "(a, b); f^(-1)"
+  },
+  {
+   "file": "Pre-work 4.1 Inverse Functions",
+   "q": "10",
+   "cls": "info-echo",
+   "expr": "y = x"
+  },
+  {
+   "file": "Pre-work 4.1 Inverse Functions",
+   "q": "11",
+   "cls": "info-notation",
+   "expr": "f(-3) = 6; f^(-1)(6) ="
+  },
+  {
+   "file": "Pre-work 4.1 Inverse Functions",
+   "q": "12",
+   "cls": "info-notation",
+   "expr": "f(-4) = 16; f(4) = 16"
+  },
+  {
+   "file": "Build Understanding 4.2 Exponential Functions",
+   "q": "5",
+   "cls": "info-echo",
+   "expr": "Fill in each blank so that the resulting statement is true. The graph of the exp"
+  },
+  {
+   "file": "Build Understanding 4.2 Exponential Functions",
+   "q": "16",
+   "cls": "info-notation",
+   "expr": "(1 + ((1)/(n)))^n"
+  },
+  {
+   "file": "Build Understanding 4.2 Exponential Functions",
+   "q": "24",
+   "cls": "info-echo",
+   "expr": "h(x) = -e^x"
+  },
+  {
+   "file": "Build Understanding 4.2 Exponential Functions",
+   "q": "39",
+   "cls": "info-notation",
+   "expr": "A = P(1 + ((r)/(n)))^(nt)"
+  },
+  {
+   "file": "Build Understanding 4.2 Exponential Functions",
+   "q": "40",
+   "cls": "info-echo",
+   "expr": "Select the answers that best complete the given statement. If compound interest"
+  },
+  {
+   "file": "Build Understanding 4.2 Exponential Functions",
+   "q": "41",
+   "cls": "info-echo",
+   "expr": "and the interest rate is"
+  },
+  {
+   "file": "Build Understanding 4.2 Exponential Functions",
+   "q": "42",
+   "cls": "info-echo",
+   "expr": "at a rate of; compounded quarterly. Find how much Laura owes at the end of"
+  },
+  {
+   "file": "Build Understanding 4.2 Exponential Functions",
+   "q": "43",
+   "cls": "info-echo",
+   "expr": "is appreciated for; years in an account that earns"
+  },
+  {
+   "file": "Build Understanding 4.2 Exponential Functions",
+   "q": "44",
+   "cls": "info-echo",
+   "expr": "earning; interest compounded continuously"
+  },
+  {
+   "file": "Build Understanding 4.2 Exponential Functions",
+   "q": "45",
+   "cls": "info-echo",
+   "expr": "is invested for; years at"
+  },
+  {
+   "file": "Pre-work 4.2 Exponential Functions",
+   "q": "1",
+   "cls": "info-echo",
+   "expr": "4^2 = 8"
+  },
+  {
+   "file": "Pre-work 4.2 Exponential Functions",
+   "q": "2",
+   "cls": "info-echo",
+   "expr": "8^1 = 1"
+  },
+  {
+   "file": "Pre-work 4.2 Exponential Functions",
+   "q": "3",
+   "cls": "info-echo",
+   "expr": "8^2"
+  },
+  {
+   "file": "Pre-work 4.2 Exponential Functions",
+   "q": "4",
+   "cls": "info-echo",
+   "expr": "21^2"
+  },
+  {
+   "file": "Pre-work 4.2 Exponential Functions",
+   "q": "5",
+   "cls": "info-echo",
+   "expr": "3^4"
+  },
+  {
+   "file": "Pre-work 4.2 Exponential Functions",
+   "q": "6",
+   "cls": "info-echo",
+   "expr": "10^3"
+  },
+  {
+   "file": "Pre-work 4.2 Exponential Functions",
+   "q": "7",
+   "cls": "info-echo",
+   "expr": "8^4"
+  },
+  {
+   "file": "Pre-work 4.2 Exponential Functions",
+   "q": "8",
+   "cls": "info-echo",
+   "expr": "4^5"
+  },
+  {
+   "file": "Pre-work 4.2 Exponential Functions",
+   "q": "9",
+   "cls": "info-echo",
+   "expr": "(((1)/(4)))^3"
+  },
+  {
+   "file": "Pre-work 4.2 Exponential Functions",
+   "q": "10",
+   "cls": "info-echo",
+   "expr": "(((5)/(6)))^4"
+  },
+  {
+   "file": "Pre-work 4.2 Exponential Functions",
+   "q": "11",
+   "cls": "info-echo",
+   "expr": "(0.6)^2"
+  },
+  {
+   "file": "Pre-work 4.2 Exponential Functions",
+   "q": "12",
+   "cls": "info-echo",
+   "expr": "(0.2)^3"
+  },
+  {
+   "file": "Pre-work 4.2 Exponential Functions",
+   "q": "13",
+   "cls": "info-echo",
+   "expr": "(3^4)^2"
+  },
+  {
+   "file": "Pre-work 4.2 Exponential Functions",
+   "q": "14",
+   "cls": "info-echo",
+   "expr": "-1"
+  },
+  {
+   "file": "Pre-work 4.2 Exponential Functions",
+   "q": "15",
+   "cls": "info-echo",
+   "expr": "(((1)/(2)))^(-4)"
+  },
+  {
+   "file": "Pre-work 4.2 Exponential Functions",
+   "q": "16",
+   "cls": "info-echo",
+   "expr": "5^(-2)"
+  },
+  {
+   "file": "Pre-work 4.2 Exponential Functions",
+   "q": "17",
+   "cls": "info-echo",
+   "expr": "(((1)/(6)))^(-4)"
+  },
+  {
+   "file": "Pre-work 4.2 Exponential Functions",
+   "q": "18",
+   "cls": "info-echo",
+   "expr": "(((4)/(5)))^(-3)"
+  },
+  {
+   "file": "Pre-work 4.2 Exponential Functions",
+   "q": "19",
+   "cls": "info-echo",
+   "expr": "13^(1/2)"
+  },
+  {
+   "file": "Pre-work 4.2 Exponential Functions",
+   "q": "21",
+   "cls": "info-echo",
+   "expr": "6^(-2) = ((1)/(6^2))"
+  },
+  {
+   "file": "Pre-work 4.2 Exponential Functions",
+   "q": "22",
+   "cls": "info-echo",
+   "expr": "216^(2/3)"
+  },
+  {
+   "file": "Pre-work 4.2 Exponential Functions",
+   "q": "23",
+   "cls": "info-echo",
+   "expr": "16^(5/2)"
+  },
+  {
+   "file": "Pre-work 4.2 Exponential Functions",
+   "q": "26",
+   "cls": "info-notation",
+   "expr": "A = 7000(1 + ((0.03)/(4)))^(8(4))"
+  },
+  {
+   "file": "Build Understanding 4.3 Logarithmic Functions",
+   "q": "11",
+   "cls": "info-echo",
+   "expr": "(((2)/(5)))^(-3) = ((125)/(8))"
+  },
+  {
+   "file": "Build Understanding 4.3 Logarithmic Functions",
+   "q": "37",
+   "cls": "info-echo",
+   "expr": "log_d x + log_d y - log_d f"
+  },
+  {
+   "file": "Build Understanding 4.3 Logarithmic Functions",
+   "q": "38",
+   "cls": "info-echo",
+   "expr": "log_c m - log_c n - log_c k"
+  },
+  {
+   "file": "Pre-work 4.3 Logarithmic Functions",
+   "q": "1",
+   "cls": "info-echo",
+   "expr": "7^? = 343"
+  },
+  {
+   "file": "Pre-work 4.3 Logarithmic Functions",
+   "q": "2",
+   "cls": "info-echo",
+   "expr": "2^? = ((1)/(8))"
+  },
+  {
+   "file": "Pre-work 4.3 Logarithmic Functions",
+   "q": "3",
+   "cls": "info-echo",
+   "expr": "4^? = 2"
+  },
+  {
+   "file": "Pre-work 4.3 Logarithmic Functions",
+   "q": "4",
+   "cls": "info-echo",
+   "expr": "(((1)/(3)))^? = 9"
+  },
+  {
+   "file": "Pre-work 4.3 Logarithmic Functions",
+   "q": "13",
+   "cls": "info-echo",
+   "expr": "Fill in the blank for the following statement. The inverse of an exponential fun"
+  },
+  {
+   "file": "Pre-work 4.3 Logarithmic Functions",
+   "q": "15",
+   "cls": "info-echo",
+   "expr": "a^y = x; log_a x = y"
+  },
+  {
+   "file": "Pre-work 4.3 Logarithmic Functions",
+   "q": "16",
+   "cls": "info-echo",
+   "expr": "log_a x"
+  },
+  {
+   "file": "Pre-work 4.3 Logarithmic Functions",
+   "q": "17",
+   "cls": "info-echo",
+   "expr": "Fill in the blank with the appropriate answer. A logarithm with base e is called"
+  },
+  {
+   "file": "Build Understanding 4.4 Evaluating Logarithms and Change of Base Formula",
+   "q": "4",
+   "cls": "info-echo",
+   "expr": "0.0775"
+  },
+  {
+   "file": "Build Understanding 4.4 Evaluating Logarithms and Change of Base Formula",
+   "q": "23",
+   "cls": "info-echo",
+   "expr": "g(x) = e^x"
+  },
+  {
+   "file": "Build Understanding 4.4 Evaluating Logarithms and Change of Base Formula",
+   "q": "24",
+   "cls": "info-echo",
+   "expr": "f(x) = ln(x)"
+  },
+  {
+   "file": "Build Understanding 4.4 Evaluating Logarithms and Change of Base Formula",
+   "q": "28",
+   "cls": "info-echo",
+   "expr": "log_a x"
+  },
+  {
+   "file": "Pre-work 4.4 Evaluating Logarithms & Change of Base Theorem",
+   "q": "4",
+   "cls": "info-echo",
+   "expr": "17"
+  },
+  {
+   "file": "Pre-work 4.4 Evaluating Logarithms & Change of Base Theorem",
+   "q": "5",
+   "cls": "info-echo",
+   "expr": "10"
+  },
+  {
+   "file": "Pre-work 4.4 Evaluating Logarithms & Change of Base Theorem",
+   "q": "10",
+   "cls": "info-echo",
+   "expr": "y = ln(x)"
+  },
+  {
+   "file": "Build Understanding 4.5 Exponential and Logarithmic Equations",
+   "q": "27",
+   "cls": "info-echo",
+   "expr": "\"I must reject any negative proposed solution when I solve an equation involving"
+  },
+  {
+   "file": "Build Understanding 4.5 Exponential and Logarithmic Equations",
+   "q": "28",
+   "cls": "info-echo",
+   "expr": "p = ((k)/(ln u)) - d"
+  },
+  {
+   "file": "Build Understanding 4.5 Exponential and Logarithmic Equations",
+   "q": "30",
+   "cls": "info-notation",
+   "expr": "A = P(1 + ((r)/(k)))^(kt)"
+  },
+  {
+   "file": "Pre-work 4.6 Applications of Exponential Growth and Decay",
+   "q": "2",
+   "cls": "info-echo",
+   "expr": "46\\%"
+  },
+  {
+   "file": "Pre-work 4.6 Applications of Exponential Growth and Decay",
+   "q": "3",
+   "cls": "info-echo",
+   "expr": "4\\%"
+  },
+  {
+   "file": "Pre-work 4.6 Applications of Exponential Growth and Decay",
+   "q": "4",
+   "cls": "info-echo",
+   "expr": "2.1\\%"
+  },
+  {
+   "file": "Pre-work 4.6 Applications of Exponential Growth and Decay",
+   "q": "5",
+   "cls": "info-echo",
+   "expr": "0.5\\%"
+  },
+  {
+   "file": "Pre-work 4.6 Applications of Exponential Growth and Decay",
+   "q": "6",
+   "cls": "info-echo",
+   "expr": "71\\%"
+  },
+  {
+   "file": "Pre-work 4.6 Applications of Exponential Growth and Decay",
+   "q": "7",
+   "cls": "info-echo",
+   "expr": "4\\%"
+  },
+  {
+   "file": "Pre-work 4.6 Applications of Exponential Growth and Decay",
+   "q": "8",
+   "cls": "info-echo",
+   "expr": "7.6\\%"
+  },
+  {
+   "file": "Build Understanding 9.1 Systems of Linear Equations",
+   "q": "13",
+   "cls": "info-notation",
+   "expr": "\\begin{aligned} x + y + z &= -6 \\quad &(1) \\\\ 2x + y - z &= -5 \\quad &(2) \\\\ x - y + z &= -10 \\quad "
+  },
+  {
+   "file": "Build Understanding 9.1 Systems of Linear Equations",
+   "q": "14",
+   "cls": "info-notation",
+   "expr": "\\begin{aligned} x + 3y + 4z &= 28 \\quad &(1) \\\\ 2x - 3y + 2z &= 20 \\quad &(2) \\\\ 3x - y + z &= 18 \\q"
+  },
+  {
+   "file": "Build Understanding 9.1 Systems of Linear Equations",
+   "q": "15",
+   "cls": "info-notation",
+   "expr": "\\begin{aligned} 4x - 2y + 5z &= 49 \\quad &(1) \\\\ 3x - 2y - 2z &= -20 \\quad &(2) \\\\ x - y + 3z &= 23 "
+  },
+  {
+   "file": "Build Understanding 9.1 Systems of Linear Equations",
+   "q": "16",
+   "cls": "info-notation",
+   "expr": "\\begin{aligned} 2x + 6y - z &= 6 \\quad &(1) \\\\ 3x - 3y + 5z &= -6 \\quad &(2) \\\\ 7x + 9y - 2z &= 11 \\"
+  },
+  {
+   "file": "Build Understanding 9.1 Systems of Linear Equations",
+   "q": "17",
+   "cls": "info-notation",
+   "expr": "\\begin{aligned} 3x + 3y - 12z &= 5 \\quad &(1) \\\\ 5x + y - z &= 8 \\quad &(2) \\\\ -x - y + 4z &= 5 \\qua"
+  },
+  {
+   "file": "Pre-work 9.1 Systems of Linear Equations",
+   "q": "5",
+   "cls": "info-echo",
+   "expr": "____"
+  },
+  {
+   "file": "Pre-work 9.1 Systems of Linear Equations",
+   "q": "6",
+   "cls": "info-echo",
+   "expr": "____"
+  },
+  {
+   "file": "Pre-work 9.5 Systems of Non-Linear Equations",
+   "q": "3",
+   "cls": "info-echo",
+   "expr": "What is the maximum number of times that a line can intersect an ellipse?"
+  },
+  {
+   "file": "Pre-work 9.5 Systems of Non-Linear Equations",
+   "q": "4",
+   "cls": "info-echo",
+   "expr": "What is the maximum number of times that a parabola can intersect an ellipse?"
+  },
+  {
+   "file": "Build Understanding 10.2 Ellipses",
+   "q": "17",
+   "cls": "info-echo",
+   "expr": "Draftspeople often use the method shown in the sketch to draw an ellipse. Why do"
+  },
+  {
+   "file": "Pre-work 10.2 Ellipses",
+   "q": "1",
+   "cls": "info-echo",
+   "expr": "A(n) _______ is the collection of all points in the plane, the sum of whose dist"
+  },
+  {
+   "file": "Pre-work 10.3 Hyperbolas",
+   "q": "1",
+   "cls": "info-echo",
+   "expr": "A(n) _______ is the collection of points in the plane, the difference of whose d"
+  },
+  {
+   "file": "Pre-work 10.3 Hyperbolas",
+   "q": "2",
+   "cls": "info-prose",
+   "expr": "The line segment between the vertices of the hyperbola is called the (1) _______"
+  },
+  {
+   "file": "Pre-work 10.3 Hyperbolas",
+   "q": "3",
+   "cls": "info-echo",
+   "expr": "The set of all points in a plane the difference of whose distances from two fixe"
+  },
+  {
+   "file": "Pre-work 10.3 Hyperbolas",
+   "q": "4",
+   "cls": "info-echo",
+   "expr": "The two branches of the graph of a hyperbola approach a pair of intersecting lin"
+  }
+ ]
+}
