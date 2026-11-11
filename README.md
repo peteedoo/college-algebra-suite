@@ -5,8 +5,7 @@ course: **39 answer sheets, 807 Pearson/MyMathLab-aligned questions, and a
 live equation engine** that parses, solves, and graphs typed input in real
 time. Zero CDN dependencies — the whole course ships in one HTML file.
 
-**Live demo (GitHub Pages):** `https://<owner>.github.io/college-algebra-suite/`
-*(URL finalized at deployment — see "Deployment" below.)*
+**Live demo (GitHub Pages):** https://peteedoo.github.io/college-algebra-suite/
 
 ---
 
