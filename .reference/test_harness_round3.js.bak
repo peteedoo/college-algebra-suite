@@ -1,0 +1,568 @@
+#!/usr/bin/env node
+/**
+ * test_all_assignments.js — automated headless verification harness.
+ *
+ * Loads the REAL production engine (the <script> inside dashboard.html),
+ * stubs the DOM, and drives every question of every assignment sheet plus
+ * the full SQLite catalog through the live pipeline:
+ *
+ *   parseQuestionCard -> extractGraphableFromQuestion / extractInitialEditableExpr
+ *                     -> parseEquationSyntax -> runToolOnParsed
+ *                     -> buildGraphDataFromParsed
+ *
+ * PASS classes (every question must land in exactly one):
+ *   ast           — full pipeline: typed AST + tool output (+ graph data
+ *                   where the type is graphable)
+ *   compile-graph — no AST, but the expression compiles to a real curve
+ *                   via compileMathFunction and the card renders it
+ *   info-*        — conceptual question: prose/definition/answer-echo/
+ *                   notation/percent/blank/applet — render-only contract
+ *
+ * Boundary conditions verified (per the hardening spec):
+ *   B1  Rational-inequality poles (denominator zeros) ALWAYS bound OPEN
+ *       intervals — never [ or ] at a pole.
+ *   B2  Exact fraction outputs — inequality endpoints render as integers or
+ *       simplified p/q fractions, never raw floats like 0.4.
+ *   B3  Multi-variable tolerance — inequalities in t (projectile height)
+ *       parse, solve, and report a Time Period in seconds.
+ *   B4  Live problem editing — rendered <span class="frac"> chips preserve
+ *       the "/" separator when their DOM text is re-extracted.
+ *   B5  Solver output matches the answer sheet's stated interval notation /
+ *       solution set for every question that states one.
+ *
+ * Exit code 0 iff every check passes. Writes test/report.json.
+ */
+'use strict';
+const fs = require('fs');
+const path = require('path');
+
+const ROOT = path.resolve(__dirname, '..');
+const html = fs.readFileSync(path.join(ROOT, 'dashboard.html'), 'utf8');
+
+function jsonBlock(id) {
+  const tag = `<script id="${id}" type="application/json">`;
+  const i = html.indexOf(tag);
+  if (i < 0) throw new Error(`missing embedded block: ${id}`);
+  const j = html.indexOf('</script>', i);
+  return html.slice(i + tag.length, j).trim();
+}
+
+const sStart = html.lastIndexOf('<script>');
+const sEnd = html.lastIndexOf('</script>');
+let engine = html.slice(sStart + '<script>'.length, sEnd);
+const cut = engine.indexOf('// Startup Initialization');
+if (cut < 0) throw new Error('cannot find startup marker to cut');
+engine = engine.slice(0, cut);
+
+// ---- minimal DOM stubs ------------------------------------------------------
+function makeEl(text) {
+  return {
+    textContent: text || '',
+    innerHTML: '',
+    value: '',
+    style: {},
+    classList: { toggle() { return false; }, add() {}, remove() {}, contains() { return false; } },
+    addEventListener() {}, setAttribute() {}, getAttribute() { return null; },
+    appendChild() {}, querySelector() { return null; }, querySelectorAll() { return []; },
+  };
+}
+const els = new Map();
+const document = {
+  getElementById(id) { if (!els.has(id)) els.set(id, makeEl('')); return els.get(id); },
+  createElement() { return makeEl(''); },
+  querySelector() { return null; },
+  querySelectorAll() { return []; },
+  addEventListener() {},
+  body: { appendChild() {} },
+};
+els.set('embedded-data', makeEl(jsonBlock('embedded-data')));
+els.set('database-data', makeEl(jsonBlock('database-data')));
+const window = { devicePixelRatio: 1, addEventListener() {} };
+
+// ---- harness body, appended into the engine's scope --------------------------
+const TESTS = `
+var __R = { totals: { questions: 0, ast: 0, compileGraph: 0, tool: 0, graph: 0,
+                     info: 0, sheetInterval: 0, omni: 0 },
+            pass: {}, assignments: {}, boundary: {}, failures: [],
+            infoList: [] };
+(function () {
+  var R = __R, F = R.failures;
+  R.pass = { ast: 0, 'compile-graph': 0, 'info-prose': 0, 'info-echo': 0,
+             'info-notation': 0, 'info-applet': 0 };
+  function fail(file, q, kind, detail) {
+    F.push({ file: file, q: String(q), kind: kind,
+             detail: String(detail == null ? '' : detail).slice(0, 260) });
+  }
+
+  var GRAPHABLE = { quadratic: 1, quad_vertex: 1, circle_std: 1, circle_gen: 1,
+    ellipse: 1, hyperbola: 1, rational: 1, rat_ineq: 1, synthetic: 1,
+    polynomial: 1, poly_ineq: 1, exp_func: 1, log_func: 1, system_2x2: 1,
+    abs: 1, abs_double: 1, two_points: 1, poly_points: 1, log_eval: 1,
+    linear: 1, complex_verify_quad: 1, sqrt_func: 1, abs_func: 1,
+    exp_eq: 1, log_eq2: 1 };
+
+  // normalize interval-ish strings: LaTeX \\infty -> ∞, \\cup -> U, ∪ -> U,
+  // unicode minus -> hyphen, \\varnothing/∅ -> EMPTY, drop **/backticks/spaces.
+  function normIv(s) {
+    // backslashes and backticks die FIRST so LaTeX words match plainly.
+    // (file-level: \\s \\* stay doubled for the template-literal eval chain)
+    var t = String(s)
+      .split(String.fromCharCode(92)).join('')
+      .split(String.fromCharCode(96)).join('')
+      .replace(/\\*\\*/g, '')
+      .replace(/\u221E/g, 'INF')
+      .replace(/\u222A/g, 'U')
+      .replace(/\u2205/g, 'EMPTY')
+      .replace(/[\u2212\u2013\u2014]/g, '-');
+    t = t.replace(/\\s+/g, '').toLowerCase();
+    return t.replace(/infty/g, 'INF')
+            .replace(/cup/g, 'U')
+            .replace(/varnothing/g, 'EMPTY')
+            .replace(/emptyset/g, 'EMPTY')
+            .replace(/empty/g, 'EMPTY')
+            .replace(/le(?![a-z])/g, '<=')
+            .replace(/ge(?![a-z])/g, '>=');
+    return t.replace(/infty/g, 'INF')
+            .replace(/cup/g, 'U')
+            .replace(/varnothing/g, 'EMPTY')
+            .replace(/emptyset/g, 'EMPTY')
+            .replace(/empty/g, 'EMPTY')
+            .replace(/le(?![a-z])/g, '<=')
+            .replace(/ge(?![a-z])/g, '>=');
+  }
+    return t.replace(/infty/g, 'INF')
+            .replace(/cup/g, 'U')
+            .replace(/varnothing/g, 'EMPTY')
+            .replace(/emptyset/g, 'EMPTY')
+            .replace(/empty/g, 'EMPTY')
+            .replace(/le(?![a-z])/g, '<=')
+            .replace(/ge(?![a-z])/g, '>=');
+  }
+  }
+  }
+  // interval/solution tokens must contain a comma (rejects '(1)' blank labels)
+  function ivTokens(s) {
+    var out = String(s).match(/[\\[({][^\\[(){}]*,[^\\])}]*[\\])}]/g) || [];
+    return out.map(normIv).filter(Boolean);
+  }
+  function hasInterval(s) {
+    return ivTokens(s).length > 0 || normIv(s).indexOf('EMPTY') >= 0;
+  }
+
+  // ---------- informational-question classifier (auditable rules) ----------
+  function classifyInfo(expr, problem, answer, graphEq) {
+    var e = String(expr || '').trim();
+    if (!e) return 'info-applet';
+    // percent echoes: "46%", "4%", "0.5%"
+    if (/^\\d+(?:\\.\\d+)?\\s*\\\\?%$/.test(e.replace(/\\s+/g, ''))) return 'info-echo';
+    // pure blank fills
+    if (/^_+$/.test(e)) return 'info-echo';
+    // pure numbers / symbols without any letter: intervals, sets, '(1)',
+    // '((0)/(-15))', coordinate pairs, '80 / 2 = 40'
+    if (!/[a-zA-Z]/.test(e)) return 'info-echo';
+    // LaTeX qualifier fragments (definitions, conjugate notation)
+    if (/\\\\neq|\\\\pm|\\\\bar|\\\\iff|\\\\text|\\\\quad|\\\\stackrel/.test(e)) return 'info-notation';
+    // three-part inequality without pipes = rewrite-blank echo (Ch 1.8 Q1/Q2)
+    if (/^[+-]?[\\d.]+\\s*(?:<|<=)\\s*[^|]+(?:<|<=)\\s*[+-]?[\\d.]+$/.test(e) && !/\\|/.test(e)) {
+      return 'info-notation';
+    }
+    // no digits at all: conceptual variable forms 'sqrt(a)', 'a + bi', '(h,k)'
+    if (!/\\d/.test(e)) return 'info-echo';
+    // constant-function echo: f(x) = 4 / y = 4
+    if (/^(?:[fghpqr]\\(x\\)|y)\\s*=\\s*[-\\d.]+$/i.test(e)) return 'info-echo';
+    // pure prose sentences (3+ letter words, no math structure)
+    if (/[A-Za-z]{3,}[\\s,]+[A-Za-z]{3,}[\\s,]+[A-Za-z]{3,}/.test(e) && !/[=^\\/|]/.test(e)) {
+      return 'info-prose';
+    }
+    return null;
+  }
+
+  function tries(x, fn) { try { return fn(); } catch (e) { return null; } }
+
+  // =========================================================
+  // Walk every answer sheet exactly like renderMarkdownToHtml
+  // =========================================================
+  var fileNames = Object.keys(answersData);
+  var catalogByAssignment = {};
+  (courseDatabase.catalog || []).forEach(function (c) {
+    (catalogByAssignment[c.assignment] = catalogByAssignment[c.assignment] || []).push(c);
+  });
+
+  fileNames.forEach(function (fname) {
+    var md = answersData[fname];
+    var name = fname.replace(' - Answers.md', '');
+    var A = { questions: 0, pass: {}, info: {} };
+    R.assignments[name] = A;
+
+    // S1. whole sheet renders without JS artifacts leaking in
+    try {
+      var rendered = renderMarkdownToHtml(md);
+      if (/=\s*(?:undefined|NaN)\b|>(?:undefined|NaN)</|(?:undefined|NaN)\s*<\//.test(rendered)) {
+        fail(name, 'RENDER', 'render-js-artifact', JSON.stringify(rendered.match(/.{40}(?:undefined|NaN).{20}/s)));
+      }
+    } catch (e) { fail(name, 'RENDER', 'render-crash', e.message); }
+
+    var rawSections = md.split(/(?=\\n\\*\\s+\\*\\*Question\\s+\\d+:?|\\n\\*\\s+\\*\\*Q\\d+:?|\\n###\\s+\\*?\\*?Questions?\\s+)/i);
+    var qIndex = 0;
+
+    function processSec(secRaw, idx) {
+      var sec = String(secRaw).trim();
+      if (!sec) return;
+      var titleM = sec.match(/(?:###\\s+\\*?\\*?(Questions?[^\\n*#]+)\\*?\\*?|\\*\\s+\\*?\\*?(question\\s+\\d+[a-za-z0-9\\u2013-]*:?|Q\\d+:?)\\*?\\*?)/i);
+      if (!titleM) { fail(name, idx, 'no-title', sec.slice(0, 60)); return; }
+      var qTitle = (titleM[1] || titleM[2] || '').replace(/:$/, '').trim();
+      var numM = qTitle.match(/\\b(?:Question|Q)\\s*(\\d+)\\b/i);
+      var key = numM ? numM[1] : String(idx);
+
+      // fresh state per question (S1 render also fills originalCardStates)
+      Object.keys(originalCardStates).forEach(function (k) { delete originalCardStates[k]; });
+      try { parseQuestionCard(sec, idx); }
+      catch (e) { fail(name, key, 'card-crash', e.message); return; }
+      var st = originalCardStates[key];
+      if (!st) { fail(name, key, 'card-nokey', qTitle); return; }
+
+      var expr = (st.initialExpr || '').trim();
+      var graphEq = (st.graphEq || '').trim();
+      A.questions++; R.totals.questions++;
+
+      var probM = sec.match(/\\*\\s+\\*\\*Problem:\\*\\*\\s*(.*?)(?=\\n\\*\\s+\\*\\*|\\n---|$)/s);
+      var ansM = sec.match(/\\*\\s+\\*\\*Answers?:\\*\\*\\s*(.*?)(?=\\n\\*\\s+\\*\\*|\\n---|$)/s);
+      var problem = probM ? probM[1].trim() : '';
+      var answer = ansM ? ansM[1].trim() : '';
+
+      var info = classifyInfo(expr, problem, answer, graphEq);
+      if (info) {
+        R.pass[info]++; R.totals.info++;
+        A.info[info] = (A.info[info] || 0) + 1;
+        R.infoList.push({ file: name, q: key, cls: info, expr: expr.slice(0, 100) });
+        return;
+      }
+
+      // solvable contract: AST -> tool -> graph
+      var p = null;
+      try { p = parseEquationSyntax(expr); }
+      catch (e) { fail(name, key, 'PARSE-crash', e.message); return; }
+
+      if (p) {
+        if (typeof p.type !== 'string') { fail(name, key, 'PARSE-noType', expr); return; }
+        var tool = null;
+        try { tool = runToolOnParsed(p, expr); }
+        catch (e) { fail(name, key, 'TOOL-crash', p.type + ' :: ' + e.message); return; }
+        if (!tool || !tool.title || !tool.outputVal) {
+          fail(name, key, 'TOOL-null', p.type + ' :: ' + expr); return;
+        }
+        R.totals.tool++;
+        if (GRAPHABLE[p.type]) {
+          var gd = null;
+          try { gd = buildGraphDataFromParsed(p, expr); }
+          catch (e) { fail(name, key, 'GRAPH-crash', e.message); return; }
+          if (!gd) { fail(name, key, 'GRAPH-null', p.type + ' :: ' + expr); return; }
+          R.totals.graph++;
+        }
+        R.pass.ast++; R.totals.ast++;
+        if (p.type === 'poly_ineq' || p.type === 'rat_ineq') checkIneq(name, key, p, sec, expr);
+        if (p.type === 'abs' || p.type === 'abs_double') checkAbs(name, key, sec, tool);
+        return;
+      }
+
+      // no AST — acceptable only if it compiles to a real rendered graph
+      var fn1 = null, fn2 = null;
+      try { fn1 = expr ? compileMathFunction(expr) : null; } catch (e) { fn1 = null; }
+      try { fn2 = graphEq ? compileMathFunction(graphEq) : null; } catch (e) { fn2 = null; }
+      var realCurve = fn1 && tries(null, function () { return isFinite(fn1(1.3) + fn1(-0.7)); });
+      var geCurve = fn2 && tries(null, function () { return isFinite(fn2(1.3) + fn2(-0.7)); });
+      if ((realCurve && (graphEq || isFinite(fn1(0)))) || (geCurve && graphEq)) {
+        R.pass['compile-graph']++; R.totals.compileGraph++;
+        return;
+      }
+      fail(name, key, 'UNSOLVED-solvable-shape', expr);
+    }
+
+    for (var i = 1; i < rawSections.length; i++) {
+      var sec2 = rawSections[i];
+      var s2 = sec2.trim();
+      if (!s2) continue;
+      var groupMatch = s2.match(/^###\\s+\\*?\\*?(questions?\\s+[^\\n*#]+)\\*?\\*?/i);
+      if (groupMatch && !s2.includes('* **Problem:')) {
+        var subItems = s2.split(/(?=\\n\\*\\s+\\*\\*question|\\n\\*\\s+\\*\\*Q\\d+)/i);
+        for (var j = 1; j < subItems.length; j++) processSec(subItems[j], ++qIndex);
+        continue;
+      }
+      processSec(sec2, ++qIndex);
+    }
+  });
+
+  // =========================================================
+  // Inequality boundary checker (B1 poles-open, B2 fractions, B5 sheet)
+  // =========================================================
+  function checkIneq(name, key, p, sec, expr) {
+    var isRat = p.type === 'rat_ineq';
+    var numC = isRat ? p.numCoeffs : p.coeffs;
+    var denC = isRat ? p.denCoeffs : [1];
+    var sc = null;
+    try { sc = solveSignChartInequalityJS(numC, denC, p.op); }
+    catch (e) { fail(name, key, 'INEQ-crash', e.message); return; }
+
+    // B1: denominator zeros must bound OPEN intervals, always.
+    if (isRat) {
+      R.boundary.poleChecks = (R.boundary.poleChecks || 0) + sc.denRoots.length;
+      sc.denRoots.forEach(function (dr) {
+        sc.intervals.forEach(function (iv) {
+          if (Math.abs(iv.from - dr) < 1e-6 && iv.inclusiveFrom)
+            fail(name, key, 'POLE-closed-from', 'pole ' + dr + ' interval ' + sc.intervalStr);
+          if (Math.abs(iv.to - dr) < 1e-6 && iv.inclusiveTo)
+            fail(name, key, 'POLE-closed-to', 'pole ' + dr + ' interval ' + sc.intervalStr);
+        });
+      });
+    }
+
+    // B2: endpoints render as integers or p/q fractions, never raw floats
+    var ends = [];
+    sc.intervals.forEach(function (iv) {
+      if (isFinite(iv.from)) ends.push(iv.from);
+      if (isFinite(iv.to)) ends.push(iv.to);
+    });
+    (sc.isolatedPoints || []).forEach(function (e2) { ends.push(e2); });
+    ends.forEach(function (e2) {
+      var s2 = formatEndpoint(e2);
+      if (/\\.\\d/.test(s2)) fail(name, key, 'FRAC-float', 'endpoint ' + e2 + ' -> "' + s2 + '" in ' + sc.intervalStr);
+    });
+
+    // B3: t-variable inequalities report a Time Period
+    if (p.variable === 't') {
+      R.boundary.tChecks = (R.boundary.tChecks || 0) + 1;
+      var tool = null;
+      try { tool = runToolOnParsed(p, expr); } catch (e) { tool = null; }
+      if (!/Time Period/.test(String(tool && tool.outputVal)))
+        fail(name, key, 'T-noperiod', expr);
+    }
+
+    // B5: sheet cross-check when the sheet states an interval/solution
+    var ansM = sec.match(/\\*\\s+\\*\\*Answers?:\\*\\*\\s*(.*?)(?=\\n\\*\\s+\\*\\*|\\n---|$)/s);
+    if (!ansM) return;
+    var sheetN = normIv(ansM[1]);
+    var toolN = normIv(sc.intervalStr);
+    if (!hasInterval(ansM[1])) return;
+    R.boundary.sheetChecks = (R.boundary.sheetChecks || 0) + 1;
+    if (sheetN.indexOf(toolN) === -1) {
+      // tolerate t-questions where the sheet states decimals, not the interval
+      var pts = [];
+      sc.intervals.forEach(function (iv) {
+        if (isFinite(iv.from) && isFinite(iv.to)) pts.push(iv.from, iv.to);
+      });
+      var tOk = pts.length === 2 && pts.every(function (v) {
+        return sheetN.indexOf(String(Number(v.toFixed(2))) + 'sec') !== -1;
+      });
+      if (!(p.variable === 't' && tOk))
+        fail(name, key, 'SHEET-interval', 'tool="' + sc.intervalStr + '" sheet="' + String(ansM[1]).trim().slice(0, 160) + '"');
+      else R.totals.sheetInterval++;
+    } else R.totals.sheetInterval++;
+  }
+
+  // =========================================================
+  // Absolute-value tool boundary checker (B2/B5 on abs tools)
+  // =========================================================
+  function checkAbs(name, key, sec, tool) {
+    if (!tool) return;
+    var ansM = sec.match(/\\*\\s+\\*\\*Answers?:\\*\\*\\s*(.*?)(?=\\n\\*\\s+\\*\\*|\\n---|$)/s);
+    if (!ansM) return;
+    var sheetN = normIv(ansM[1]);
+    var partM = String(tool.outputVal).match(/Part 2 \\(Interval Notation\\):\\*\\*<\\/strong>\\s*<strong>([^<]*)<\\/strong>/s)
+            || String(tool.outputVal).match(/<strong>\\{([^<]*)\\}<\\/strong>/s);
+    if (!partM) return;
+    var toolIv = normIv(partM[1]);
+    if (!hasInterval(ansM[1])) return;
+    R.boundary.absSheetChecks = (R.boundary.absSheetChecks || 0) + 1;
+    if (sheetN.indexOf(toolIv) === -1)
+      fail(name, key, 'SHEET-abs', 'tool="' + toolIv + '" sheet="' + String(ansM[1]).trim().slice(0, 160) + '"');
+    else R.totals.sheetInterval++;
+  }
+
+  // =========================================================
+  // Omni/catalog path: every catalog question's match-card graph equation
+  // =========================================================
+  (courseDatabase.catalog || []).forEach(function (item) {
+    var ge = '';
+    try {
+      ge = extractGraphableFromQuestion(item.problem, item.answer,
+                                        (item.equations && item.equations[0]) || '', '');
+    } catch (e) { fail(item.assignment, item.qNum, 'OMNI-crash', e.message); return; }
+    if (!ge) return;
+    R.totals.omni++;
+    var p = null, gd = null;
+    try { p = parseEquationSyntax(ge); } catch (e) { fail(item.assignment, item.qNum, 'OMNI-parse-crash', e.message); return; }
+    if (p) {
+      R.totals.omniParse++;
+      try { gd = buildGraphDataFromParsed(p, ge); } catch (e) { gd = null; }
+      if (!gd) {
+        var fnG = null;
+        try { fnG = compileMathFunction(ge); } catch (e) { fnG = null; }
+        if (!fnG) fail(item.assignment, item.qNum, 'OMNI-graph-null', ge);
+      }
+    } else {
+      var fnG2 = null;
+      try { fnG2 = compileMathFunction(ge); } catch (e) { fnG2 = null; }
+      var real = fnG2 && tries(null, function () { return isFinite(fnG2(1.3) + fnG2(-0.7)); });
+      if (!real) fail(item.assignment, item.qNum, 'OMNI-unusable', ge);
+    }
+  });
+
+  // =========================================================
+  // Explicit boundary unit tests (B1..B4 named in the spec)
+  // =========================================================
+  var B = R.boundary;
+  function u(label, fn) {
+    try { fn(); B[label] = 'pass'; }
+    catch (e) { B[label] = 'FAIL: ' + e.message; fail('UNIT', label, 'UNIT', e.message); }
+  }
+  function eq(label, a, b) {
+    if (a !== b) throw new Error(label + ': ' + JSON.stringify(a) + ' !== ' + JSON.stringify(b));
+  }
+
+  u('B1-pole-open-rat-ineq', function () {
+    var p = parseEquationSyntax('(x - 2)/(x + 3) > 1');
+    if (!p || p.type !== 'rat_ineq') throw new Error('did not parse as rat_ineq: ' + JSON.stringify(p && p.type));
+    var sc = solveSignChartInequalityJS(p.numCoeffs, p.denCoeffs, p.op);
+    eq('pole x=-3 open', normIv(sc.intervalStr), normIv('(-∞, -3)'));
+    eq('numerator has no zero', sc.numRoots.length, 0);
+  });
+  u('B2-exact-fraction', function () {
+    var p = parseEquationSyntax('5x^2 + 3x <= 2');
+    var sc = solveSignChartInequalityJS(p.coeffs, [1], p.op);
+    eq('interval must be exact fractions', normIv(sc.intervalStr), normIv('[-1, 2/5]'));
+    eq('formatEndpoint(0.4)', formatEndpoint(0.4), '2/5');
+    eq('formatEndpoint(-1)', formatEndpoint(-1), '-1');
+    eq('formatEndpoint(-19/15)', formatEndpoint(-19 / 15), '-19/15');
+  });
+  u('B3-t-variable', function () {
+    var p = parseEquationSyntax('-16t^2 + 36t + 5 >= 25');
+    if (!p || p.type !== 'poly_ineq' || p.variable !== 't')
+      throw new Error('t-inequality mis-parsed: ' + JSON.stringify(p && p.type) + ' var=' + JSON.stringify(p && p.variable));
+    var tool = runToolOnParsed(p, '-16t^2 + 36t + 5 >= 25');
+    if (!/between \\(and inclusive of\\) 1 sec and 1\\.25 sec/i.test(String(tool.outputVal)))
+      throw new Error('time period wrong: ' + String(tool.outputVal).slice(0, 200));
+  });
+  u('B4-frac-span-slash', function () {
+    var T = function (s) { return { nodeType: 3, textContent: s }; };
+    var frac = {
+      nodeType: 1,
+      classList: { contains: function (c) { return c === 'frac'; } },
+      querySelector: function (sel) { return sel === '.num' ? T('3') : T('4'); },
+      childNodes: [],
+    };
+    var out = extractDomMathText(frac);
+    if (out !== '((3)/(4))') throw new Error('frac DOM text lost "/": ' + JSON.stringify(out));
+    var fm = formatMath('\\\\frac{3}{4}');
+    if (!/class="frac"/.test(fm) || !/class="num"/.test(fm) || !/class="den"/.test(fm))
+      throw new Error('formatMath lost frac spans');
+    var norm = normalizeEditedMathText('x² + ¾');
+    if (norm.indexOf('^2') === -1) throw new Error('superscript not normalized: ' + norm);
+    eq('parse 3/4', parsePolyCoeffs('3/4')[0], 0.75);
+  });
+  u('B5-sign-chart-closure', function () {
+    var p = parseEquationSyntax('((x + 11)(x - 13))/(x + 9) <= 0');
+    if (!p || p.type !== 'rat_ineq') throw new Error('mis-parsed: ' + JSON.stringify(p && p.type));
+    var sc = solveSignChartInequalityJS(p.numCoeffs, p.denCoeffs, p.op);
+    eq('sheet interval', normIv(sc.intervalStr), normIv('(-∞, -11] U (-9, 13]'));
+  });
+  u('V4-exp-equations', function () {
+    var cases = [
+      ['256^(3x) = 64^(x + 2)', '2/3'],
+      ['e^(8x - 1) = (e^6)^x', '1/2'],
+      ['(sqrt(2))^(x + 8) = 16^x', '8/7'],
+      ['16^(3x - 3) = 64^(x + 2)', '4'],
+      ['((5)/(2))^x = ((8)/(125))', '-3'],
+      ['((1)/(e))^(-x) = ((1)/(e^3))^(x + 1)', '-3/4'],
+      ['2^x = ((1)/(16))', '-4'],
+      ['((1)/(9))^x = 81', '-2'],
+      ['6^x = ((1)/(216))', '-3'],
+      ['((1)/(4))^x = 64', '-3']
+    ];
+    cases.forEach(function (c) {
+      var p = parseEquationSyntax(c[0]);
+      if (!p || p.type !== 'exp_eq') throw new Error('exp equation not parsed: ' + c[0] + ' -> ' + JSON.stringify(p && p.type));
+      eq('exp_eq ' + c[0], p.xStr, c[1]);
+    });
+    var mix = parseEquationSyntax('f(x) = 0.06 * (1.16)^x - 6');
+    if (!mix || mix.type !== 'exp_eq') throw new Error('mixed form: ' + JSON.stringify(mix && mix.type));
+    eq('mixed 0.06(1.16)^x = 6', mix.xStr, '31.028');
+    var f7 = parseEquationSyntax('f(x) = 3 * 3^(x-2) + 1 - 103');
+    eq('mixed 3*3^(x-2)+1=103', f7.xStr, '5.21');
+  });
+  u('V4-log-equations', function () {
+    eq('log_5 x = 2', parseEquationSyntax('log_5 x = 2').solX, 25);
+    eq('log_36 x = 3/2', parseEquationSyntax('log_36 x = ((3)/(2))').solX, 216);
+    eq('log_1/4(x+2) = -3', parseEquationSyntax('log_1/4(x + 2) = -3').solX, 62);
+    eq('log_(x + 7) 13 = 1', parseEquationSyntax('log_(x + 7) 13 = 1').xStr, '6');
+  });
+  u('V4-conic-general', function () {
+    var c1 = parseEquationSyntax('(x^2 + 12x) + (y^2 - 14y) = 5');
+    if (!c1 || c1.type !== 'circle_gen') throw new Error('grouped form: ' + JSON.stringify(c1 && c1.type));
+    var t1 = runToolOnParsed(c1, '');
+    var plain1 = String(t1.outputVal).replace(/<[^>]+>/g, '');
+    if (plain1.indexOf('(-6, 7)') < 0 || plain1.indexOf('9.49') < 0)
+      throw new Error('center should be (-6, 7), r = sqrt(90) ~ 9.49: ' + plain1.slice(0, 160));
+    var c2 = parseEquationSyntax('4x^2 + 4x + 4y^2 - 32y - 79 = 0');
+    var t2 = runToolOnParsed(c2, '');
+    var plain2 = String(t2.outputVal).replace(/<[^>]+>/g, '');
+    if (plain2.indexOf('(-0.5, 4)') < 0 && plain2.indexOf('(-1/2, 4)') < 0)
+      throw new Error('center should be (-0.5, 4): ' + plain2.slice(0, 200));
+    if (plain2.indexOf('6.00') < 0 && plain2.indexOf('6') < 0)
+      throw new Error('r should be 6: ' + plain2.slice(0, 200));
+    if (plain2.indexOf('6.00') < 0 && plain2.indexOf('6') < 0)
+      throw new Error('r should be 6: ' + plain2.slice(0, 200));
+    if (plain2.indexOf('6.00') < 0 && plain2.indexOf('6') < 0)
+      throw new Error('r should be 6: ' + plain2.slice(0, 200));
+  });
+  u('V4-log-sum', function () {
+    var e1 = parseEquationSyntax('log(2x + 1) + log 3 = log(5x + 6)');
+    if (!e1 || e1.type !== 'log_eq2') throw new Error('log sum: ' + JSON.stringify(e1 && e1.type));
+    eq('log(2x+1)+log3=log(5x+6)', e1.roots[0], 3);
+    var e2 = parseEquationSyntax('ln(4 - x) + ln(-3 - x) = ln(2 - 6x)');
+    eq('ln(4-x)+ln(-3-x)=ln(2-6x)', e2.roots[0], -7);
+    var e3 = parseEquationSyntax('log_5(x + 10) + log_5(x - 10) = 3');
+    eq('log_5(x+10)+log_5(x-10)=3', e3.roots[0], 15);
+  });
+
+  // search smoke tests
+  try {
+    var hits = searchCourseCatalog('vertex', null);
+    if (!hits.length) fail('SEARCH', 'vertex', 'SEARCH-empty', '');
+    var none = searchCourseCatalog('zzzzqqqq', null);
+    if (none.length) fail('SEARCH', 'garbage', 'SEARCH-noise', none.length + ' hits');
+  } catch (e) { fail('SEARCH', 'smoke', 'SEARCH-crash', e.message); }
+
+  R.totals.failures = F.length;
+})();
+return JSON.parse(JSON.stringify(__R));
+`;
+
+const run = new Function('document', 'window', engine + TESTS);
+const report = run(document, window);
+
+fs.writeFileSync(path.join(__dirname, 'report.json'), JSON.stringify(report, null, 1));
+
+// ---- console summary -------------------------------------------------------
+const t = report.totals;
+console.log('=== HEADLESS ENGINE TEST — dashboard.html ===');
+console.log(`sheets:          ${Object.keys(report.assignments).length}`);
+console.log(`questions:       ${t.questions}`);
+console.log(`  ast solved:      ${report.pass.ast}`);
+console.log(`  compile-graph:   ${report.pass['compile-graph']}`);
+console.log(`  informational:  ${t.info}  (prose ${report.pass['info-prose']}, echo ${report.pass['info-echo']}, notation ${report.pass['info-notation']}, applet ${report.pass['info-applet']})`);
+console.log(`  tool outputs:   ${t.tool}`);
+console.log(`  graph data:     ${t.graph}`);
+console.log(`omni cards:      ${t.omni} (ast ${t.omniParse})`);
+console.log(`sheet matches:   ${t.sheetInterval}`);
+console.log(`boundary:       ${JSON.stringify(report.boundary)}`);
+console.log(`FAILURES:        ${report.failures.length}`);
+
+const byKind = {};
+report.failures.forEach(f => { byKind[f.kind] = (byKind[f.kind] || 0) + 1; });
+console.log('failure kinds:', JSON.stringify(byKind));
+report.failures.slice(0, 50).forEach(f =>
+  console.log(`  [${f.kind}] ${f.file} :: Q${f.q} — ${f.detail}`));
+if (report.failures.length > 50)
+  console.log(`  … ${report.failures.length - 50} more (see test/report.json)`);
+
+process.exit(report.failures.length === 0 ? 0 : 1);
