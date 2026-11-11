@@ -1,0 +1,135 @@
+[
+ {
+  "chapter": "1.3",
+  "topic_name": "Complex Numbers",
+  "solver_type": "complex",
+  "rule_summary": "i\u00b2 = -1, (a+bi)(c+di) via FOIL, division by complex conjugate",
+  "standard_equation": "(a + bi)(c + di) = (ac - bd) + (ad + bc)i"
+ },
+ {
+  "chapter": "1.8",
+  "topic_name": "Absolute Value Inequalities",
+  "solver_type": "abs",
+  "rule_summary": "|u| < c implies -c < u < c; |u| > c implies u > c or u < -c",
+  "standard_equation": "|ax + b| \u2264 c"
+ },
+ {
+  "chapter": "2.2",
+  "topic_name": "Circles",
+  "solver_type": "circle",
+  "rule_summary": "Standard: (x-h)\u00b2 + (y-k)\u00b2 = r\u00b2. General: x\u00b2 + y\u00b2 + Bx + Cy + D = 0",
+  "standard_equation": "(x - h)\u00b2 + (y - k)\u00b2 = r\u00b2"
+ },
+ {
+  "chapter": "3.1",
+  "topic_name": "Quadratic Functions",
+  "solver_type": "quadratic",
+  "rule_summary": "Vertex form: a(x-h)\u00b2 + k. Standard: ax\u00b2 + bx + c, h = -b/(2a), k = f(h)",
+  "standard_equation": "f(x) = ax\u00b2 + bx + c"
+ },
+ {
+  "chapter": "3.2",
+  "topic_name": "Synthetic Division",
+  "solver_type": "synthetic",
+  "rule_summary": "Divides P(x) by (x - c). Remainder Theorem: P(c) = r. Factor Theorem: P(c)=0 <=> (x-c) is factor",
+  "standard_equation": "P(x) = (x - c)q(x) + r"
+ },
+ {
+  "chapter": "3.3",
+  "topic_name": "Zeros of Polynomial Functions",
+  "solver_type": "synthetic",
+  "rule_summary": "Rational Zero Theorem: p/q where p|a0 and q|an. Fundamental Theorem of Algebra: n complex zeros",
+  "standard_equation": "f(x) = an*x^n + ... + a0"
+ },
+ {
+  "chapter": "3.4",
+  "topic_name": "Polynomial Graphs & Turning Points",
+  "solver_type": "quadratic",
+  "rule_summary": "End behavior from leading term an*x^n. Multiplicity: odd crosses, even touches/turns. At most n-1 turns",
+  "standard_equation": "f(x) = an*x^n"
+ },
+ {
+  "chapter": "3.5",
+  "topic_name": "Rational Functions",
+  "solver_type": "rational",
+  "rule_summary": "Vertical asymptotes where denominator = 0. Horizontal asymptote compares degrees of num & den",
+  "standard_equation": "f(x) = P(x) / Q(x)"
+ },
+ {
+  "chapter": "3.6",
+  "topic_name": "Polynomial & Rational Inequalities",
+  "solver_type": "abs",
+  "rule_summary": "Find critical zeros, plot on number line, test signs in each interval",
+  "standard_equation": "P(x)/Q(x) \u2265 0"
+ },
+ {
+  "chapter": "4.1",
+  "topic_name": "Inverse Functions",
+  "solver_type": "inverse",
+  "rule_summary": "Swap x and y, solve for y. Domain of f = Range of f^-1. Verification: (f \u2218 f^-1)(x) = x",
+  "standard_equation": "f^(-1)(x)"
+ },
+ {
+  "chapter": "4.2",
+  "topic_name": "Exponential Functions",
+  "solver_type": "exponential",
+  "rule_summary": "f(x) = a^x. Domain (-\u221e, \u221e), Range (0, \u221e). Compound Interest: A = P(1 + r/n)^(nt), Continuous: A = Pe^(rt)",
+  "standard_equation": "A(t) = P*e^(rt)"
+ },
+ {
+  "chapter": "4.3",
+  "topic_name": "Logarithmic Functions",
+  "solver_type": "logarithm",
+  "rule_summary": "log_b(x) = y <=> b^y = x. Domain (0, \u221e), vertical asymptote x = 0",
+  "standard_equation": "y = log_b(x)"
+ },
+ {
+  "chapter": "4.4",
+  "topic_name": "Properties of Logarithms",
+  "solver_type": "logarithm",
+  "rule_summary": "log(xy) = log(x) + log(y), log(x/y) = log(x) - log(y), log(x^c) = c*log(x). Change of Base: log_b(x) = ln(x)/ln(b)",
+  "standard_equation": "log_b(x) = ln(x)/ln(b)"
+ },
+ {
+  "chapter": "4.5",
+  "topic_name": "Exponential & Log Equations",
+  "solver_type": "logarithm",
+  "rule_summary": "Equate powers or take ln. For logs, condense and convert to exponential form. Check for extraneous solutions!",
+  "standard_equation": "b^x = c"
+ },
+ {
+  "chapter": "4.6",
+  "topic_name": "Growth and Decay Models",
+  "solver_type": "exponential",
+  "rule_summary": "A(t) = A0*e^(kt). Half-life: k = -ln(2)/t_half. Doubling time: k = ln(2)/T_double",
+  "standard_equation": "A(t) = A_0 * e^(kt)"
+ },
+ {
+  "chapter": "9.1",
+  "topic_name": "Systems of Linear Equations",
+  "solver_type": "linear_system",
+  "rule_summary": "Solve by substitution or elimination. Consistent: (x, y); Inconsistent: \u2205; Dependent: infinitely many",
+  "standard_equation": "ax + by = c"
+ },
+ {
+  "chapter": "9.5",
+  "topic_name": "Nonlinear Systems",
+  "solver_type": "quadratic",
+  "rule_summary": "Substitute linear equation into nonlinear curve. Solve and test all coordinate pairs (x, y)",
+  "standard_equation": "x\u00b2 + y\u00b2 = r\u00b2"
+ },
+ {
+  "chapter": "10.2",
+  "topic_name": "Ellipses",
+  "solver_type": "ellipse",
+  "rule_summary": "Center (h, k), foci c\u00b2 = a\u00b2 - b\u00b2. Major axis length 2a, minor axis length 2b",
+  "standard_equation": "(x-h)\u00b2/a\u00b2 + (y-k)\u00b2/b\u00b2 = 1"
+ },
+ {
+  "chapter": "10.3",
+  "topic_name": "Hyperbolas",
+  "solver_type": "hyperbola",
+  "rule_summary": "Center (h, k), foci c\u00b2 = a\u00b2 + b\u00b2, asymptotes y - k = \u00b1(b/a)(x - h)",
+  "standard_equation": "(x-h)\u00b2/a\u00b2 - (y-k)\u00b2/b\u00b2 = 1"
+ }
+]
