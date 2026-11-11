@@ -1,0 +1,8 @@
+# Build dependencies for the dashboard generator + database builder.
+# Both run on the Python 3 standard library only; nothing to install.
+# This file documents the tested environment.
+#
+#   python3 --version   -> 3.10+ (stdlib sqlite3, json, pathlib, re)
+#   node --version      -> 18+   (test harness only, not required to build)
+
+# No third-party packages are required.

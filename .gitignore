@@ -1,0 +1,25 @@
+# OS artifacts
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+# temporary editor locks
+.~lock*
+~$*
+# Python
+__pycache__/
+.pytest_cache/
+*.pyc
+*.pyo
+*.egg-info/
+.venv/
+venv/
+# secrets / environment
+.env
+.env.*
+# local scratch
+*.scratch/
+scratch/
+*.log
+/tmp/
